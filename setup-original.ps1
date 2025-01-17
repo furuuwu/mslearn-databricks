@@ -82,8 +82,7 @@ while ($stop -ne 1){
     write-host "Trying $Region..."
     # Check that the required SKU is available
     $skuOK = 1
-    # $skus = Get-AzComputeResourceSku $Region | Where-Object {$_.ResourceType -eq "VirtualMachines" -and $_.Name -eq "Standard_D4ds_v5"}
-    $skus = Get-AzComputeResourceSku -Location $Region | Where-Object {$_.ResourceType -eq "VirtualMachines" -and $_.Name -eq "Standard_D2ds_v5"}
+    $skus = Get-AzComputeResourceSku $Region | Where-Object {$_.ResourceType -eq "VirtualMachines" -and $_.Name -eq "Standard_D4ds_v5"}
     if ($skus.length -gt 0)
     {
         $r = $skus.Restrictions
@@ -103,8 +102,7 @@ while ($stop -ne 1){
             write-host "$cores of $maxcores cores in use."
             $available_quota = $quota.limit - $quota.currentvalue
         }
-    # if (($available_quota -lt 8) -or ($skuOK -eq 0))
-    if (($available_quota -lt 4) -or ($skuOK -eq 0))
+    if (($available_quota -lt 8) -or ($skuOK -eq 0))
     {
         Write-Host "$Region has insufficient capacity."
         $tried_regions.Add($Region)
